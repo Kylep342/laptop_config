@@ -6,7 +6,7 @@ set -o errexit pipefail
 
 
 if [[ -e $HOME/.zshrc ]] && [[ ! -h $HOME/.zshrc ]]; then
-    echo "You have a real .zshrc file. Would you like to save a backup at $HOME/.zshrc.backup? [Y/n]:"
+    echo "You have a current .zshrc file. Would you like to save a backup at $HOME/.zshrc.backup? [Y/n]:"
     read -r bkp
     if [[ $bkp =~ "^[y|Y]$" ]]; then
         echo "Making backup of $HOME/.zshrc at $HOME/.zshrc.backup"
@@ -22,10 +22,8 @@ echo "zshrc set up"
 echo "Installing Powerline fonts"
 
 git clone https://github.com/powerline/fonts.git --depth=1
-# install
 cd fonts
 ./install.sh
-# clean-up a bit
 cd ..
 rm -rf fonts
 

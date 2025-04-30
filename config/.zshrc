@@ -107,27 +107,38 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-alias ccsv="pbpaste > ~/Downloads/GuyBakery.txt"
 alias cdr='cd $(git rev-parse --show-toplevel)'
+alias dshell="docker run -it --entrypoint /bin/bash"
 alias gce="git config -e"
 alias gcge="git config --global -e"
-alias ls="lsd"
+alias gdh="git diff HEAD"
+alias jsonc="pbpaste | jq | pbcopy"
+alias ls="lsd -l"
+alias lsn="lsd --oneline --classify | grep -v '/$'"
 alias pc="python -c"
 alias rid="cd ~/code/538_Riddler"
 alias vim="nvim"
 alias ze="vim ~/.zshrc"
 alias zs="source ~/.zshrc"
-
-eval "$(/opt/homebrew/bin/brew shellenv)"
+alias zz="ze; zs"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
-export PATH=$(pyenv root)/shims:$PATH
-eval "$(pyenv init -)"
 
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - zsh)"
+
+fline () {
+	head -n $2 $1 | tail -n 1
+}
+
+ftype () {
+	find $1 -type f -exec file --mime {} \+
+}
 
 sp () {
 	rg $2 $HOME/.oh-my-zsh/plugins/$1/$1.plugin.zsh
