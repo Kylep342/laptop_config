@@ -77,7 +77,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(dotenv git kubectl pip terraform)
+plugins=(dotenv git kubectl pip terraform docker docker-compose)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -116,13 +116,19 @@ alias jsonc="pbpaste | jq | pbcopy"
 alias ls="lsd -l"
 alias lsn="lsd --oneline --classify | grep -v '/$'"
 alias pc="python -c"
-alias rid="cd ~/code/538_Riddler"
 alias vim="nvim"
 alias ze="vim ~/.zshrc"
 alias zs="source ~/.zshrc"
-alias zz="ze; zs"
+alias zz="ze && zs"
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+export GOPATH="$HOME/go"
+export GOPRIVATE=github.com/expel-io/*
+export GOROOT="/opt/homebrew/Cellar/go/1.24.2/libexec"
+export GONOPROXY=none
+
+source <(fzf --zsh)
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -139,15 +145,28 @@ fline () {
 ftype () {
 	find $1 -type f -exec file --mime {} \+
 }
+export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
 
 sp () {
 	rg $2 $HOME/.oh-my-zsh/plugins/$1/$1.plugin.zsh
 }
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
+source ~/mystuff/laptop_config/powerlevel10k/powerlevel10k.zsh-theme
 
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/kyle/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/kyle/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f '/Users/kyle/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/kyle/google-cloud-sdk/path.zsh.inc'; fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f '/Users/kyle/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/kyle/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+if [ -f '/Users/kyle/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/kyle/google-cloud-sdk/completion.zsh.inc'; fi
+export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+export PATH=/Users/kyle/cep-tools/bin/bin:$PATH # Add Expel bin
+export PATH=/Users/kyle/bin:$PATH # Add home directory bin
+source /Users/kyle/cep-tools/bash_funcs/source_all
+export PATH=/Users/kyle/cep-tools/bin/bin:$PATH # Add Expel bin
+export PATH=/Users/kyle/bin:$PATH # Add home directory bin
+source /Users/kyle/cep-tools/bash_funcs/source_all
+export VAULT_TEAM=eng-ddt
+
+# Added by Windsurf
+export PATH="/Users/kyle/.codeium/windsurf/bin:$PATH"
